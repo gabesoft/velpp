@@ -1,0 +1,25 @@
+{
+  "name": "velpp",
+  "version": "0.0.1",
+  "description": "Vim help file parser",
+  "preferGlobal": false,
+  "main": "./lib/index.js",
+  "bin": {},
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^10.2.1",
+    "chai": "^2.3.0",
+    "eslint": "^0.21.2",
+    "mocha": "^2.2.5",
+    "uglify-js": "^2.4.23"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:gabesoft/velpp.git"
+  },
+  "author": {
+    "name": "Gabriel Adomnicai",
+    "email": "gabesoft@gmail.com"
+  },
+  "license": "MIT"
+}
