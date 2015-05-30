@@ -1,0 +1,13 @@
+- User Guide
+
+  - General Usage
+  - Client-server architecture
+  - Completion string ranking
+  - General semantic completion
+  - C-family semantic completion
+  - Semantic completion for other languages
+  - Writing new semantic completers
+  - Diagnostic display
+  - C# diagnostic support
+  - Diagnostic highlighting groups
+
