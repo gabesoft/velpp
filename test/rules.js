@@ -33,6 +33,16 @@ var fixtures = {
           , nonMatch : 'Not a tag link'
           , results  : [ [ 'text', '			' ], [ 'quickfix'], [ 'text', ' commands, e.g., ' ], [ ':cnext' ], [ 'text', ' to jump to the' ] ]
         }
+      , 'special-key' : {
+            content  : '			CTRL-V first to insert the <LF> or <CR> {not in vi}. Example: >'
+          , nonMatch : 'Not special'
+          , results  : [ [ 'text', '			' ], [ 'CTRL-V' ], [ 'text', ' first to insert the ' ], [ '<LF>' ], [ 'text', ' or ' ], [ '<CR>' ], [ 'text', ' {not in vi}. Example: >' ] ]
+        }
+      , 'special' : {
+            content  : '			CTRL-V first to insert the <LF> or <CR> {not in vi}. Example: >'
+          , nonMatch : 'Not special'
+          , results  : [ [ 'text', '			CTRL-V first to insert the <LF> or <CR> ' ], [ '{not in vi}' ], [ 'text', '. Example: >' ] ]
+        }
     };
 
 
