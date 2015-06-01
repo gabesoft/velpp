@@ -11,3 +11,4 @@
   - C# diagnostic support
   - Diagnostic highlighting groups
 
+Last line

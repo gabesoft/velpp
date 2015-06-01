@@ -1,0 +1,153 @@
+<html>
+    <head>
+        <style>
+            .help {
+                width: 40%;
+            }
+            .help-section-double {
+                color: salmon;
+            }
+
+            .help-option {
+                color: teal;
+            }
+
+            .help-tag {
+                color: brown;
+            }
+
+            .help-link {
+                color: blue-grey;
+            }
+
+            .help-heading {
+                color: navy;
+            }
+
+            .help-headline {
+                font-size: 16px;
+                color: darkblue;
+            }
+
+            .help-special {
+                color: red;
+            }
+
+            pre.help-example {
+                background-color: #eee;
+            }
+        </style>
+    </head>
+<body>
+<div class="help">
+
+<pre>
+<span class="help-section-double">==============================================================================</span>
+<span class="help-headline"><a name="help-xterm-window">help-xterm-window</a></span>
+
+If you want to have the help in another xterm window, you could use this
+command:
+<code>
+    :!xterm -e vim +help &
+</code>
+
+<h3 class="help-headline"><a name=":helpfind">:helpfind</a> <a name=":helpf">:helpf</a></h3>
+:helpf[ind]     Like |:help|, but use a dialog to enter the argument.
+            Only for backwards compatibility.  It now executes the
+            ToolBar.FindHelp menu entry instead of using a builtin
+            dialog.  {only when compiled with |+GUI_GTK|}
+            {not in Vi}
+
+                    *:helpt* *:helptags*
+                *E154* *E150* *E151* *E152* *E153* *E670*
+:helpt[ags] [++t] {dir}
+            Generate the help tags file(s) for directory {dir}.
+            All "*.txt" and "*.??x" files in the directory and
+            sub-directories are scanned for a help tag definition
+            in between stars.  The "*.??x" files are for
+            translated docs, they generate the "tags-??" file, see
+            |help-translated|.  The generated tags files are
+            sorted.
+            When there are duplicates an error message is given.
+            An existing tags file is silently overwritten.
+            The optional "++t" argument forces adding the
+            "help-tags" tag.  This is also done when the {dir} is
+            equal to $VIMRUNTIME/doc.
+            To rebuild the help tags in the runtime directory
+            (requires write permission there):
+            <code>
+                :helptags $VIMRUNTIME/doc
+            </code>
+           {not in Vi}
+
+<span class="help-section-double">==============================================================================</span>
+<span class="help-headline">3. Writing help files                   <a name="help-writing" class="help-tag">help-writing</a></span>
+
+For ease of use, a Vim help file for a plugin should follow the format of the
+standard Vim help files.  If you are writing a new help file it's best to copy
+one of the existing files and use it as a template.
+
+The first line in a help file should have the following format:
+
+<a name="helpfile_name.txt" class="help-tag">helpfile_name.txt</a> For Vim version 7.3 Last change: 2010 June 4
+
+The first field is a link to the help file name.  The second field describes
+the applicable Vim version.  The last field specifies the last modification
+date of the file.  Each field is separated by a tab.
+
+At the bottom of the help file, place a Vim modeline to set the <span class="help-option">textwidth</span>
+and <span class="help-option">tabstop</span> options and the <span class="help-option">filetype</span> to <span class="help-option">help</span>.  Never set a global option
+in such a modeline, that can have consequences undesired by whoever reads that
+help.
+
+TAGS
+
+To define a help tag, place the name between asterisks (*tag-name*).  The
+tag-name should be different from all the Vim help tag names and ideally
+should begin with the name of the Vim plugin.  The tag name is usually right
+aligned on a line.
+
+When referring to an existing help tag and to create a hot-link, place the
+name between two bars (|) eg. <a class="help-link" href="#help-writing">help-writing</a>.
+
+When referring to a Vim option in the help file, place the option name between
+two single quotes, eg. <span class="help-option">statusline</span>
+
+
+HIGHLIGHTING
+
+To define a column heading, use a tilde character at the end of the line.
+This will highlight the column heading in a different color.  E.g.
+
+<h3 class="help-heading">Column heading</h3>
+To separate sections in a help file, place a series of '=' characters in a
+line starting from the first column.  The section separator line is highlighted
+differently.
+
+To quote a block of ex-commands verbatim, place a greater than (&gt;) character
+at the end of the line before the block and a less than (&lt;) character as the
+first non-blank on a line following the block.  Any line starting in column 1
+also implicitly stops the block of ex-commands before it.  E.g. 
+<code>
+    function Example_Func()
+    echo "Example"
+    endfunction
+</code>
+
+The following are highlighted differently in a Vim help file:
+  - a special key name expressed either in &lt;&gt; notation as in &lt;PageDown&gt;, or
+    as a Ctrl character as in <span class="help-special">CTRL-X</span>
+  - anything between <span class="help-special">{braces}</span>, e.g. <span class="help-special">{lhs}</span> and <span class="help-special">{rhs}</span>
+
+The word "Note", "Notes" and similar automagically receive distinctive
+highlighting.  So do these:
+    *Todo   something to do
+    *Error  something wrong
+
+You can find the details in $VIMRUNTIME/syntax/help.vim
+
+ vim:tw=78:ts=8:ft=help:norl:
+</pre>
+</div>
+</body>
+</html>

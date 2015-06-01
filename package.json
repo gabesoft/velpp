@@ -7,7 +7,7 @@
   "dependencies": {
     "linkify-it": "^1.1.0"
   },
-  "description": "Vim help file parser",
+  "description": "Converter for vim help files to html",
   "devDependencies": {
     "browserify": "^10.2.1",
     "chai": "^2.3.0",
