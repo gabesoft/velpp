@@ -1,3 +1,3 @@
 #velpp#
 
-*Vim help file parser*
+*Vim help file converter to html*
