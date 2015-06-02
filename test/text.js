@@ -50,4 +50,11 @@ describe('Text', function () {
             expect(t.getLines(t.lnCount - 1, t.lnCount)).to.equal('Last line');
         });
     });
+
+    describe('nextLineWithIndent', function () {
+        it('returns the next line with a given indent', function () {
+            console.log(t.getLines(13, 14));
+            expect(t.nextLineWithIndent(9, 0)).to.equal(13);
+        });
+    });
 });
