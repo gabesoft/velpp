@@ -3,18 +3,17 @@
 var expect = require('chai').expect
   , fs     = require('fs')
   , path   = require('path')
-  , Token  = require('../lib/token').Token;
+  , Text   = require('../lib/text').Text;
 
-describe('Token', function () {
+describe('Text', function () {
     var d, t;
 
     beforeEach(function () {
         d = fs.readFileSync(path.join(__dirname, './data/doc8.txt'), 'utf8');
-        t = new Token('text', d);
-        t.markLines();
+        t = new Text(d);
     });
 
-    describe('markLines', function () {
+    describe('_markLines', function () {
         it('returns the correct number of lines', function () {
             expect(t.lnCount).to.equal(14);
         });

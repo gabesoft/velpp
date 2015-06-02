@@ -16,7 +16,7 @@ var fixtures = {
       , 'header' : {
             content  : 'Values: A string of characters separated by spaces.                          ~\n'
           , nonMatch : 'Not a header'
-          , results  : [ [ 'Values: A string of characters separated by spaces.                          ' ] ]
+          , results  : [ [ 'Values: A string of characters separated by spaces.                          ' ], [ 'text', '\n' ] ]
         }
       , 'vim-option' : {
             content  : "and 'tabstop' options and the 'filetype' to 'help'.  Never set a global option"
