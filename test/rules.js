@@ -14,7 +14,7 @@ var fixtures = {
           , results : [ [ 'INTRODUCTION                                    ' ], [ 'text',  '*abolish* *:Abolish* *:Subvert*' ] ]
         }
       , 'header' : {
-            content  : 'Values: A string of characters separated by spaces.                          ~'
+            content  : 'Values: A string of characters separated by spaces.                          ~\n'
           , nonMatch : 'Not a header'
           , results  : [ [ 'Values: A string of characters separated by spaces.                          ' ] ]
         }
@@ -43,6 +43,11 @@ var fixtures = {
           , nonMatch : 'Not special'
           , results  : [ [ 'text', '			CTRL-V first to insert the <LF> or <CR> ' ], [ '{not in vi}' ], [ 'text', '. Example: >' ] ]
         }
+      , 'code-start' : {
+            content  : '		Example: >\n'
+          , nonMatch : 'Not code start'
+          , results  : [ [ 'text', '		Example: ' ], [ '' ], [ 'text', '\n' ] ]
+        }
     };
 
 
@@ -54,11 +59,17 @@ describe('rules', function () {
     });
 
     Object.keys(fixtures).forEach(function (rule) {
+        var match = false;
+
         describe(rule, function () {
             describe('when the rule matches', function () {
                 beforeEach(function () {
                     state.pushToken('text', fixtures[rule].content);
-                    rules.applyRule(rule, state);
+                    match = rules.applyRule(rule, state);
+                });
+
+                it('returns true', function () {
+                    expect(match).to.be.true;
                 });
 
                 it('adds the correct number of tokens', function () {
@@ -80,9 +91,16 @@ describe('rules', function () {
             });
 
             describe('when the rule does not match', function () {
-                it('does not change the state', function () {
+                beforeEach(function () {
                     state.pushToken('text', fixtures[rule].nonMatch);
-                    rules.applyRule(rule, state);
+                    match = rules.applyRule(rule, state);
+                });
+
+                it('returns false', function () {
+                    expect(match).to.be.false;
+                });
+
+                it('does not change the state', function () {
                     expect(state.tokens.length).to.equal(1);
                     expect(state.tokens[0].type).to.equal('text');
                     expect(state.tokens[0].content).to.equal(fixtures[rule].nonMatch);
