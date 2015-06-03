@@ -21,7 +21,9 @@
     "onevar": false,
     "plusplus": false,
     "predef": [
-        "Ember"
+        "describe",
+        "it",
+        "beforeEach"
     ],
     "regexp": false,
     "strict": false,

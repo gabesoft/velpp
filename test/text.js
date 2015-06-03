@@ -53,8 +53,9 @@ describe('Text', function () {
 
     describe('nextLineWithIndent', function () {
         it('returns the next line with a given indent', function () {
-            console.log(t.getLines(13, 14));
             expect(t.nextLineWithIndent(9, 0)).to.equal(13);
+            expect(t.nextLineWithIndent(7, 2)).to.equal(8);
+            expect(t.nextLineWithIndent(0, 2)).to.equal(2);
         });
     });
 });

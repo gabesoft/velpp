@@ -3,22 +3,43 @@
 var expect = require('chai').expect
   , fs     = require('fs')
   , path   = require('path')
-  , eyes   = require('eyes')
   , Parser = require('../lib/parser').Parser;
 
 describe('Parser', function () {
     var p, d;
 
     beforeEach(function () {
-        d = fs.readFileSync(path.join(__dirname, './data/doc1.txt'), 'utf8');
+        d = fs.readFileSync(path.join(__dirname, './data/doc-spec.txt'), 'utf8');
         p = new Parser();
     });
 
     describe('parse', function () {
-        it('returns a list of tokens', function () {
-            var tokens = p.parse(d);
-            tokens.forEach(function (token) {
-                eyes.inspect(token);
+        var tokens = null
+          , fixtures = [
+                [ 'section-double', 1 ]
+              , [ 'headline', 1 ]
+              , [ 'code', 1 ]
+            ];
+
+        function tokensOfType (type) {
+            return tokens.filter(function (token) {
+                return token.type === type;
+            });
+        }
+
+        beforeEach(function () {
+            tokens = p.parse(d);
+        });
+
+        it('returns the correct number of tokens', function () {
+            expect(tokens.length).to.equal(99);
+        });
+
+        fixtures.forEach(function (fixture) {
+            var type  = fixture[0]
+              , count = fixture[1];
+            it('returns the correct number of tokens of type ' + type, function () {
+                expect(tokensOfType(type).length).to.equal(count);
             });
         });
     });
