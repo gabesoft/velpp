@@ -3,57 +3,54 @@
 var expect = require('chai').expect
   , util   = require('util')
   , State  = require('../lib/state').State
-  , rules  = require('../lib/rules');
+  , rules  = require('../lib/parse_rules');
 
 var fixtures = {
         'headline' : [ {
             content  : 'INTRODUCTION                                    *abolish* *:Abolish* *:Subvert*'
-          , nonMatch : 'Not a headline'
           , results  : [ [ 'INTRODUCTION                                    ' ], [ 'text',  '*abolish* *:Abolish* *:Subvert*' ] ]
         } , {
-            content  : '3. Writing help files					*help-writing*'
-          , nonMatch : 'Not a headline'
-          , results  : [ [ '3. Writing help files					' ], [ 'text', '*help-writing*' ] ]
+            content  : '3. WRITING HELP FILES					*help-writing*'
+          , results  : [ [ '3. WRITING HELP FILES					' ], [ 'text', '*help-writing*' ] ]
         } ]
         , 'todo-line' : {
               content  : '	*Todo	something to do'
-            , nonMatch : 'Not a headline'
             , results  : [ [ '	*Todo	something to do' ] ]
           }
         , 'header' : {
               content  : 'Values: A string of characters separated by spaces.                          ~\n'
-            , nonMatch : 'Not a header'
             , results  : [ [ 'Values: A string of characters separated by spaces.                          ' ], [ 'text', '\n' ] ]
           }
         , 'vim-option' : {
               content  : "and 'tabstop' options and the 'filetype' to 'help'.  Never set a global option"
-            , nonMatch : 'Not an option'
             , results  : [ ['text', 'and ' ], [ "'tabstop'" ], [ 'text', ' options and the ' ], [ "'filetype'" ], [ 'text', ' to ' ], [ "'help'" ], [ 'text', '.  Never set a global option' ] ]
           }
         , 'tag-name' : {
               content  : '*:helpfind* (*abc*) *:helpf* **note**'
-            , nonMatch : 'Not a tag name'
             , results  : [ [ ':helpfind' ], [ 'text', ' (*abc*) ' ], [ ':helpf' ], [ 'text', ' **note**' ] ]
           }
-        , 'tag-link' : {
+        , 'tag-link' : [{
               content  : '			|quickfix| commands, e.g., |:cnext| to jump to the'
-            , nonMatch : 'Not a tag link'
             , results  : [ [ 'text', '			' ], [ 'quickfix'], [ 'text', ' commands, e.g., ' ], [ ':cnext' ], [ 'text', ' to jump to the' ] ]
-          }
+          }, {
+              content : 'name between two bars (|) eg. |help-writing|.'
+            , results : [ [ 'text', 'name between two bars (|) eg. ' ], [ 'help-writing' ], [ 'text', '.' ] ]
+          }]
         , 'special-key' : {
               content  : '			CTRL-V first to insert the <LF> or <CR> {not in vi}. Example: >'
-            , nonMatch : 'Not special'
             , results  : [ [ 'text', '			' ], [ 'CTRL-V' ], [ 'text', ' first to insert the ' ], [ '<LF>' ], [ 'text', ' or ' ], [ '<CR>' ], [ 'text', ' {not in vi}. Example: >' ] ]
           }
         , 'special' : {
               content  : '			CTRL-V first to insert the <LF> or <CR> {not in vi}. Example: >'
-            , nonMatch : 'Not special'
             , results  : [ [ 'text', '			CTRL-V first to insert the <LF> or <CR> ' ], [ '{not in vi}' ], [ 'text', '. Example: >' ] ]
           }
         , 'code-start' : {
               content  : '		Example: >\n'
-            , nonMatch : 'Not code start'
             , results  : [ [ 'text', '		Example: ' ], [ '' ], [ 'text', '\n' ] ]
+          }
+        , 'todo-line' : {
+              content  : '	*Todo	something to do\n'
+            , results  : [ [ '	*Todo	something to do' ], [ 'text', '\n' ] ]
           }
     };
 
@@ -98,8 +95,10 @@ describe('rules', function () {
             });
 
             describe('when the rule does not match', function () {
+                var nonMatch = ruleData.nonMatch || 'invalid';
+
                 beforeEach(function () {
-                    state.pushToken('text', ruleData.nonMatch);
+                    state.pushToken('text', nonMatch);
                     match = rules.applyRule(rule, state);
                 });
 
@@ -110,7 +109,7 @@ describe('rules', function () {
                 it('does not change the state', function () {
                     expect(state.tokens.length).to.equal(1);
                     expect(state.tokens[0].type).to.equal('text');
-                    expect(state.tokens[0].content).to.equal(ruleData.nonMatch);
+                    expect(state.tokens[0].content).to.equal(nonMatch);
                 });
             });
         });

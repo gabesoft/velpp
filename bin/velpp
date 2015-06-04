@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+var file  = process.argv[2]
+  , path  = require('path')
+  , fs    = require('fs')
+  , hb    = require('handlebars')
+  , Velpp = require('../lib/index').Velpp
+  , velpp = new Velpp()
+  , tpath = path.join(__dirname, '../templates/html.hbs')
+  , templ = fs.readFileSync(tpath, 'utf8')
+  , data  = fs.readFileSync(file, 'utf8')
+  , body  = velpp.render(data)
+  , html  = hb.compile(templ)({ body : body });
+
+console.log(html);
+

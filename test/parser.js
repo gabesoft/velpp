@@ -17,8 +17,15 @@ describe('Parser', function () {
         var tokens = null
           , fixtures = [
                 [ 'section-double', 1 ]
-              , [ 'headline', 1 ]
+              , [ 'headline', 0 ]
               , [ 'code', 1 ]
+              , [ 'tag-name', 2 ]
+              , [ 'tag-link', 1 ]
+              , [ 'vim-option', 5 ]
+              , [ 'vim-version', 1 ]
+              , [ 'header', 1 ]
+              , [ 'special-key', 2 ]
+              , [ 'special', 3 ]
             ];
 
         function tokensOfType (type) {
@@ -32,7 +39,7 @@ describe('Parser', function () {
         });
 
         it('returns the correct number of tokens', function () {
-            expect(tokens.length).to.equal(99);
+            expect(tokens.length).to.equal(101);
         });
 
         fixtures.forEach(function (fixture) {

@@ -1,7 +1,7 @@
 'use strict';
 
 var expect = require('chai').expect
-  , rules  = require('../lib/rules')
+  , rules  = require('../lib/parse_rules')
   , Token  = require('../lib/token').Token
   , State  = require('../lib/state').State;
 
