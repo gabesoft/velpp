@@ -35,6 +35,9 @@ var fixtures = {
           }, {
               content : 'name between two bars (|) eg. |help-writing|.'
             , results : [ [ 'text', 'name between two bars (|) eg. ' ], [ 'help-writing' ], [ 'text', '.' ] ]
+          }, {
+              content : '|<Plug>(clever-f-t)| and |<Plug>(clever-f-T)| as default mappings.'
+            , results : [ [ '<Plug>(clever-f-t)' ], [ 'text', ' and ' ], [ '<Plug>(clever-f-T)' ], [ 'text', ' as default mappings.' ] ]
           }]
         , 'special-key' : {
               content  : '			CTRL-V first to insert the <LF> or <CR> {not in vi}. Example: >'
@@ -46,7 +49,11 @@ var fixtures = {
           }
         , 'code-start' : {
               content  : '		Example: >\n'
-            , results  : [ [ 'text', '		Example: ' ], [ '' ], [ 'text', '\n' ] ]
+            , results  : [ [ 'text', '		Example:' ], [ '' ], [ 'text', '\n' ] ]
+          }
+        , 'code-close' : {
+              content  : '<\n'
+            , results  : [ [ '' ], [ 'text', '\n' ] ]
           }
         , 'todo-line' : {
               content  : '	*Todo	something to do\n'

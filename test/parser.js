@@ -39,7 +39,7 @@ describe('Parser', function () {
         });
 
         it('returns the correct number of tokens', function () {
-            expect(tokens.length).to.equal(101);
+            expect(tokens.length).to.equal(103);
         });
 
         fixtures.forEach(function (fixture) {
@@ -48,6 +48,23 @@ describe('Parser', function () {
             it('returns the correct number of tokens of type ' + type, function () {
                 expect(tokensOfType(type).length).to.equal(count);
             });
+        });
+
+        it('parses successive code block regions', function () {
+            var text = [
+                    '3.4 UPDATING PLUGINS ~'
+                  , '                   *vundle-plugins-update* *:PluginUpdate* *:PluginInstall!*'
+                  , '>'
+                  , '  :PluginInstall!   " NOTE: bang(!)'
+                  , 'or >'
+                  , '  :PluginUpdate'
+                  , ''
+                  , 'Installs or updates the configured plugins. Press \'u\' after updates complete'
+                  , 'to see the change log of all updated bundles. Press \'l\' (lowercase \'L\') to'
+                ].join('\n');
+
+            tokens = p.parse(text);
+            expect(tokensOfType('code').length).to.equal(2);
         });
     });
 });

@@ -16,6 +16,7 @@
     "eslint": "^0.21.2",
     "eyes": "^0.1.8",
     "handlebars": "^3.0.3",
+    "highlight.js": "^8.6.0",
     "mocha": "^2.2.5",
     "uglify-js": "^2.4.23"
   },
